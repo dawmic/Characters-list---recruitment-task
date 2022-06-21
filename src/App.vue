@@ -1,119 +1,55 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import Character from "./components/Character.vue";
+import { ref, onMounted, computed, onUpdated } from "vue";
+import axios from "axios";
+import Filters from "./components/Filters.vue";
+import router from "./router";
+const list = ref("");
+const queryString = ref("");
+function getCharactersList(query) {
+  axios
+    .get(`https://rickandmortyapi.com/api/character/?${query}`)
+    .then((res) => {
+      // console.log(res.data.results);
+      list.value = res.data.results;
+    })
+    .catch((err) => console.log(`Something wrong ${err}`));
+}
 
+onMounted(() => {
+  getCharactersList();
+});
+const charactersList = computed(() => list.value);
+
+function getFilteredChractersList(query) {
+  getCharactersList(query);
+  window.scrollTo(0, 0);
+}
 </script>
 
 <template>
-  <header>
-    <p>test</p>
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <Filters @filterCharacters="getFilteredChractersList($event)" />
+  <RouterView :charactersList="charactersList" />
 </template>
 
-<style>
+<style lang="scss">
 @import "@/assets/base.css";
+@import url("https://fonts.googleapis.com/css2?family=Raleway&family=Roboto+Condensed:wght@700&display=swap");
 
+html {
+  font-size: 62.5%;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
 #app {
-  width: 100%;
+  max-width: 160rem;
   margin: 0 auto;
   padding: 2rem;
-
   font-weight: normal;
+  color: $text-color;
+  display: flex;
+  flex-direction: row;
 }
 
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
