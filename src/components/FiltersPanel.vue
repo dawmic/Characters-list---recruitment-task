@@ -1,4 +1,21 @@
 <script setup>
+import { ref, computed } from "vue";
+const emit = defineEmits(["filterCharacters"]);
+const filters = ref([]);
+const status = ref(0),
+  gender = ref(0),
+  species = ref(0);
+
+const query = computed(() => filters.value.join("&"));
+
+function filterData(...args) {
+  filters.value = [];
+  console.log(args);
+  for (let arg of args) {
+    if (arg != "0") filters.value.push(arg);
+  }
+  emit("filterCharacters", query);
+}
 </script>
 <template>
   <nav class="filters-container">
@@ -9,13 +26,13 @@
         <input
           class="input-container__radio"
           type="radio"
-          id="all"
+          id="all-status"
           name="status"
           v-model="status"
           value="0"
           checked
         />
-        <label class="input-container__label" for="all">All</label>
+        <label class="input-container__label" for="all-status">All</label>
       </div>
       <div class="input-container">
         <input
@@ -37,24 +54,34 @@
           v-model="status"
           value="status=dead"
         />
-        <label for="dead">Dead</label>
+        <label class="input-container__label" for="dead">Dead</label>
       </div>
       <div class="input-container">
         <input
           class="input-container__radio"
           type="radio"
-          id="unknown"
+          id="unknown-status"
           name="status"
           v-model="status"
           value="status=unknown"
         />
-        <label class="input-container__label" for="unknown">Unknown</label>
+        <label class="input-container__label" for="unknown-status"
+          >Unknown</label
+        >
       </div>
     </fieldset>
     <fieldset class="filters-container__fieldset">
       <legend class="filters-container__fieldset--legend">Gender</legend>
       <div class="input-container">
-        <input type="radio" id="all" name="gender" v-model="gender" value="0" checked />
+        <input
+          class="input-container__radio"
+          type="radio"
+          id="all"
+          name="gender"
+          v-model="gender"
+          value="0"
+          checked
+        />
         <label class="input-container__label" for="all">All</label>
       </div>
       <div class="input-container">
@@ -65,7 +92,6 @@
           name="gender"
           v-model="gender"
           value="gender=female"
-         
         />
         <label class="input-container__label" for="female">Female</label>
       </div>
@@ -80,7 +106,7 @@
         />
         <label class="input-container__label" for="male">Male</label>
       </div>
-       <div class="input-container">
+      <div class="input-container">
         <input
           class="input-container__radio"
           type="radio"
@@ -89,18 +115,22 @@
           v-model="gender"
           value="gender=genderless"
         />
-        <label class="input-container__label" for="genderless">Genderless</label>
+        <label class="input-container__label" for="genderless"
+          >Genderless</label
+        >
       </div>
-       <div class="input-container">
+      <div class="input-container">
         <input
           class="input-container__radio"
           type="radio"
-          id="unknown"
+          id="unknown-gender"
           name="gender"
           v-model="gender"
           value="gender=unknown"
         />
-        <label class="input-container__label" for="unknown">Unknown</label>
+        <label class="input-container__label" for="unknown-gender"
+          >Unknown</label
+        >
       </div>
     </fieldset>
     <fieldset class="filters-container__fieldset">
@@ -109,14 +139,14 @@
         <input
           class="input-container__radio"
           type="radio"
-          id="all"
+          id="all-species"
           name="species"
           v-model="species"
           value="0"
         />
-        <label class="input-container__label" for="all">All</label>
+        <label class="input-container__label" for="all-species">All</label>
       </div>
-       <div class="input-container">
+      <div class="input-container">
         <input
           class="input-container__radio"
           type="radio"
@@ -139,9 +169,93 @@
         <label class="input-container__label" for="alien">Alien</label>
       </div>
     </fieldset>
-    <button @click="filterData(status, gender, species)">Apply</button>
+    <button
+      class="filters-container__button"
+      @click="filterData(status, gender, species)"
+    >
+      APPLY
+    </button>
   </nav>
 </template>
 <style lang="scss" scoped>
+.filters-container {
+  flex: 0 1 auto;
+  height: 90vh;
+  border-right: 2px solid gray;
+  position: sticky;
+  top: 5%;
+  padding-right: 3rem;
+  color: $dark-gray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Roboto Condensed", sans-serif;
+  .filters-container__fieldset {
+    border: none;
+    .filters-container__fieldset--legend {
+      font-size: 1.8rem;
+    }
+    .input-container {
+      margin: 0.5rem;
+      min-width: 15rem;
+      display: flex;
+      .input-container__label {
+        margin-left: 1rem;
+        font-size: 2rem;
+        font-weight: bold;
+        line-height: 1.1;
+        display: grid;
+        grid-template-columns: 1em auto;
+        gap: 0.5em;
+      }
+      .input-container__radio {
+        -webkit-appearance: none;
+        appearance: none;
+        font: inherit;
+        color: orange;
+        width: 1.15em;
+        height: 1.15em;
+        border: 0.15em solid $dark-gray;
+        border-radius: 50%;
+        transform: translateY(-0.075em);
+        display: grid;
+        place-content: center;
 
+        //transform: translateY(-0.075em);
+        &::before {
+          content: "";
+          width: 0.65em;
+          height: 0.65em;
+          border-radius: 50%;
+          transform: scale(0);
+          transition: 120ms transform ease-in-out;
+          box-shadow: inset 1em 1em $morty-orange;
+        }
+        &:checked::before {
+          transform: scale(1);
+        }
+        &:focus {
+          outline: max(2px, 0.15em) $morty-orange;
+          outline-offset: max(2px, 0.15em);
+        }
+      }
+    }
+  }
+  .filters-container__button {
+    outline: none;
+    border: none;
+font-family: inherit;
+    width: 100%;
+    height: 4.5rem;
+    background: $morty-orange;
+    color: $dark-gray;
+    font-weight: 900;
+    font-size: 2rem;
+    border-radius: 2rem;
+    transition: opacity .3s;
+    &:hover{
+        opacity: .8;
+    }
+  }
+}
 </style>
