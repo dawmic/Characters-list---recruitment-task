@@ -1,11 +1,11 @@
 <script setup>
 import { ref, computed } from "vue";
-const emit = defineEmits(["filterCharacters"]);
+const props = defineProps(['showFilterPanel']);
+const emit = defineEmits(["filterCharacters", 'toggleView']);
 const filters = ref([]);
 const status = ref(0),
   gender = ref(0),
   species = ref(0);
-
 const query = computed(() => filters.value.join("&"));
 
 function filterData(...args) {
@@ -16,9 +16,12 @@ function filterData(...args) {
   }
   emit("filterCharacters", query);
 }
+function toggleView(){
+    emit('toggleView');
+}
 </script>
 <template>
-  <nav class="filters-container">
+  <nav class="filters-container" :class="{showPanel: props.showFilterPanel}">
     <h2 class="filters-container__header">FILTERS</h2>
     <fieldset class="filters-container__fieldset">
       <legend class="filters-container__fieldset--legend">Status</legend>
@@ -171,7 +174,7 @@ function filterData(...args) {
     </fieldset>
     <button
       class="filters-container__button"
-      @click="filterData(status, gender, species)"
+      @click="filterData(status, gender, species), toggleView()"
     >
       APPLY
     </button>
@@ -179,17 +182,26 @@ function filterData(...args) {
 </template>
 <style lang="scss" scoped>
 .filters-container {
-  flex: 0 1 auto;
-  height: 90vh;
-  border-right: 2px solid gray;
-  position: sticky;
-  top: 5%;
+  flex: 1 0 auto;
+  z-index: 2;
   padding-right: 3rem;
   color: $dark-gray;
+  transition: all 1s;
   display: flex;
   flex-direction: column;
-  align-items: center;
   font-family: "Roboto Condensed", sans-serif;
+  margin-left: 2rem;
+  overflow: hidden;
+  height: 0;
+
+  @include media-md {
+    position: sticky;
+    height: 90vh;
+    top: 9rem;
+    align-items: center;
+    border-right: 2px solid $dark-gray;
+    margin-left: 0;
+  }
   .filters-container__fieldset {
     border: none;
     .filters-container__fieldset--legend {
@@ -220,8 +232,6 @@ function filterData(...args) {
         transform: translateY(-0.075em);
         display: grid;
         place-content: center;
-
-        //transform: translateY(-0.075em);
         &::before {
           content: "";
           width: 0.65em;
@@ -244,18 +254,27 @@ function filterData(...args) {
   .filters-container__button {
     outline: none;
     border: none;
-font-family: inherit;
+    font-family: inherit;
     width: 100%;
     height: 4.5rem;
+    margin-top: 2rem;
+    margin-left: .7rem;
     background: $morty-orange;
     color: $dark-gray;
     font-weight: 900;
     font-size: 2rem;
+    letter-spacing: 1.5px;
     border-radius: 2rem;
-    transition: opacity .3s;
-    &:hover{
-        opacity: .8;
+    transition: opacity 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 10px 0px,
+      rgba(0, 0, 0, 0.5) 0px 2px 15px 0px;
+    &:hover {
+      opacity: 0.8;
     }
   }
+}
+
+.showPanel{
+   height: 90vh;
 }
 </style>
