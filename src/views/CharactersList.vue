@@ -9,11 +9,14 @@ const props = defineProps(["charactersList"]);
     <Character v-for="item in props.charactersList" :item="item" />
   </main>
 </template>
-<style lang="scss" scoped>
+<style lang="scss">
 .main {
-  display: flex;
+
+ display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center; 
+  
+
 }
 </style>

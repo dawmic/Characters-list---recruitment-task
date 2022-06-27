@@ -1,6 +1,5 @@
 <script setup>
 const props = defineProps(["item"]);
-const character = props.item;
 </script>
 <template>
   <div class="character">
@@ -8,28 +7,28 @@ const character = props.item;
       <img
         class="character__boxImage--image"
         :src="props.item.image"
-        :alt="character.name"
+        :alt="props.item.name"
       />
     </div>
     <div class="character__boxInfo">
       <h2 class="character__boxInfo--name">
-        {{ character.name }}
+        {{ props.item.name }}
       </h2>
-      <p class="character__boxInfo--info" v-if="character.status == 'Alive'">
-        <span class="alive"></span>{{ character.status }} -
-        {{ character.species }}
+      <p class="character__boxInfo--info" v-if="props.item.status == 'Alive'">
+        <span class="alive"></span>{{ props.item.status }} -
+        {{ props.item.species }}
       </p>
-      <p class="character__boxInfo--info" v-if="character.status == 'Dead'">
-        <span class="dead"></span>{{ character.status }} -
-        {{ character.species }}
+      <p class="character__boxInfo--info" v-if="props.item.status == 'Dead'">
+        <span class="dead"></span>{{ props.item.status }} -
+        {{ props.item.species }}
       </p>
-      <p class="character__boxInfo--info" v-if="character.status == 'unknown'">
-        <span class="unknown"></span>{{ character.status }} -
-        {{ character.species }}
+      <p class="character__boxInfo--info" v-if="props.item.status == 'unknown'">
+        <span class="unknown"></span>{{ props.item.status }} -
+        {{ props.item.species }}
       </p>
       <p class="character__boxInfo--info">
         <span class="location">Last known location: </span>
-        {{ character.location.name }}
+        {{ props.item.location.name }}
       </p>
     </div>
   </div>
@@ -44,13 +43,21 @@ const character = props.item;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 10px 0px,
     rgba(0, 0, 0, 0.5) 0px 2px 15px 0px;
   overflow: hidden;
-  background-color: #3c3e44;
-  margin: 1.5rem;
-  @include media-md{
+  background-color: $dark-gray;
+  margin: 1rem;
+  
+  @include media-md {
     flex-direction: row;
+    /*
     width: 60rem;
-    height: 22rem;
+    height: 22rem; */
+    max-width: 90%;
+    
   }
+  @include media-lg{
+    max-width: 45%;
+  }
+  
   &:hover {
     .character__boxImage--image {
       transform: scale(1.1);
@@ -62,9 +69,9 @@ const character = props.item;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     overflow: hidden;
-    @include media-md{
+    @include media-md {
       height: 100%;
-      width: 40%;
+      flex: 2 1 0%;
       border-top-right-radius: 0;
     }
     .character__boxImage--image {
@@ -74,7 +81,8 @@ const character = props.item;
     }
   }
   .character__boxInfo {
-    margin: 1.5rem .5rem .5rem 1.5rem;
+    margin: 1.5rem 0.5rem 0.5rem 1.5rem;
+    flex: 3 1 0%;
     .character__boxInfo--name {
       font-size: calc(2rem + 0.5vw);
       font-weight: 700;
