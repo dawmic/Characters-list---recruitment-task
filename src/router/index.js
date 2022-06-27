@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import CharactersList from "../views/CharactersList.vue";
+import FilteredCharactersList from "../views/FilteredCharactersList.vue";
 
 
 const router = createRouter({
@@ -9,6 +10,11 @@ const router = createRouter({
       path: "/",
       name: "CharactersList",
       component: CharactersList,
+    },
+    {
+      path: "/:query",
+      name: "FilteredCharactersList",
+      component: FilteredCharactersList,
     },
     {
       path: "/about",
