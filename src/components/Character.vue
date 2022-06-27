@@ -49,8 +49,8 @@ const props = defineProps(["item"]);
   @include media-md {
     flex-direction: row;
     /*
-    width: 60rem;
-    height: 22rem; */
+    width: 60rem;*/
+    height: 22rem; 
     max-width: 90%;
     
   }

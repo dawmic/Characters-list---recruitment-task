@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
-const props = defineProps(['showFilterPanel']);
-const emit = defineEmits(["filterCharacters", 'toggleView']);
+const props = defineProps(["showFilterPanel"]);
+const emit = defineEmits(["filterCharacters", "toggleView"]);
 const filters = ref([]);
 const status = ref(0),
   gender = ref(0),
@@ -17,11 +17,11 @@ function filterData(...args) {
   emit("filterCharacters", query);
 }
 function toggleView(){
-    emit('toggleView');
+  emit("toggleView");
 }
 </script>
 <template>
-  <nav class="filters-container" :class="{showPanel: props.showFilterPanel}">
+  <nav class="filters-container" :class="{ showPanel: props.showFilterPanel }">
     <h2 class="filters-container__header">FILTERS</h2>
     <fieldset class="filters-container__fieldset">
       <legend class="filters-container__fieldset--legend">Status</legend>
@@ -186,16 +186,19 @@ function toggleView(){
   z-index: 2;
   padding-right: 3rem;
   color: $dark-gray;
-  transition: all 1s;
+  transition: all 0.5s;
   display: flex;
   flex-direction: column;
   font-family: "Roboto Condensed", sans-serif;
   margin-left: 2rem;
   overflow: hidden;
   height: 0;
+  position: sticky;
+top: 6rem;
+background: #FFFFFF;
 
   @include media-md {
-    position: sticky;
+   // position: sticky;
     height: 90vh;
     top: 9rem;
     align-items: center;
@@ -274,7 +277,12 @@ function toggleView(){
   }
 }
 
-.showPanel{
-   height: 90vh;
+.showPanel {
+  height: 90vh;
+  /*  position: fixed;
+  background: #FFFFFF;
+
+  width: 90%;
+  top: 6rem; */
 }
 </style>

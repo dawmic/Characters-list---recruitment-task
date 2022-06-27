@@ -4,7 +4,6 @@ import Character from "./components/Character.vue";
 import { ref, onMounted, computed, onUpdated } from "vue";
 import axios from "axios";
 import router from "./router";
-import Paginate from "./components/Paginate.vue";
 import FiltersPanel from "./components/FiltersPanel.vue";
 import Header from "./components/Header.vue";
 const list = ref("");
