@@ -16,7 +16,7 @@ function filterData(...args) {
   }
   emit("filterCharacters", query);
 }
-function toggleView(){
+function toggleView() {
   emit("toggleView");
 }
 </script>
@@ -182,7 +182,7 @@ function toggleView(){
 </template>
 <style lang="scss" scoped>
 .filters-container {
-  flex: 1 0 auto;
+  width: 100%;
   z-index: 2;
   padding-right: 3rem;
   color: $dark-gray;
@@ -190,20 +190,23 @@ function toggleView(){
   display: flex;
   flex-direction: column;
   font-family: "Roboto Condensed", sans-serif;
-  margin-left: 2rem;
+padding-left: 2rem;
+margin-top: 2rem;
   overflow: hidden;
+  overflow-y: scroll;
   height: 0;
   position: sticky;
-top: 6rem;
-background: #FFFFFF;
-
-  @include media-md {
-   // position: sticky;
+  top: 6rem;
+  left: 0;
+  background: #ffffff;
+  @include media-lg {
+    min-width: 25rem;
+    max-width: 30rem;
     height: 90vh;
     top: 9rem;
     align-items: center;
     border-right: 2px solid $dark-gray;
-    margin-left: 0;
+    padding: 0;
   }
   .filters-container__fieldset {
     border: none;
@@ -259,9 +262,9 @@ background: #FFFFFF;
     border: none;
     font-family: inherit;
     width: 100%;
+    max-width: 20rem;
     height: 4.5rem;
-    margin-top: 2rem;
-    margin-left: .7rem;
+    margin: 2rem 0 2rem 0.7rem;
     background: $morty-orange;
     color: $dark-gray;
     font-weight: 900;
@@ -271,18 +274,13 @@ background: #FFFFFF;
     transition: opacity 0.3s;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 10px 0px,
       rgba(0, 0, 0, 0.5) 0px 2px 15px 0px;
+
     &:hover {
       opacity: 0.8;
     }
   }
 }
-
 .showPanel {
   height: 90vh;
-  /*  position: fixed;
-  background: #FFFFFF;
-
-  width: 90%;
-  top: 6rem; */
 }
 </style>
