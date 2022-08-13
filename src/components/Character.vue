@@ -8,6 +8,7 @@ const props = defineProps(["item"]);
         class="character__boxImage--image"
         :src="props.item.image"
         :alt="props.item.name"
+        
       />
     </div>
     <div class="character__boxInfo">
@@ -32,12 +33,15 @@ const props = defineProps(["item"]);
       </p>
     </div>
   </div>
+  
 </template>
 <style scoped lang="scss">
 .character {
+
   display: flex;
   flex-direction: column;
   width: 80%;
+  max-width: 32rem;
   height: initial;
   border-radius: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 10px 0px,
@@ -45,19 +49,19 @@ const props = defineProps(["item"]);
   overflow: hidden;
   background-color: $dark-gray;
   margin: 1rem;
-  
-  @include media-md {
-    flex-direction: row;
-    /*
-    width: 60rem;*/
-    height: 22rem; 
-    max-width: 90%;
+
+  @include media-md{
     
   }
-  @include media-lg{
-    max-width: 45%;
+
+  @include media-lg {
+    flex-direction: row;
+    height: 22rem;
+    min-width: 45rem;
+    width: 40%;
+    max-width: 60rem;
   }
-  
+
   &:hover {
     .character__boxImage--image {
       transform: scale(1.1);
@@ -69,7 +73,7 @@ const props = defineProps(["item"]);
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     overflow: hidden;
-    @include media-md {
+    @include media-lg {
       height: 100%;
       flex: 2 1 0%;
       border-top-right-radius: 0;

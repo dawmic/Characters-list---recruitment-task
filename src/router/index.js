@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import CharactersList from "../views/CharactersList.vue";
-import FilteredCharactersList from "../views/FilteredCharactersList.vue";
+import Error from "../views/Error.vue";
 
 
 const router = createRouter({
@@ -12,19 +12,11 @@ const router = createRouter({
       component: CharactersList,
     },
     {
-      path: "/:query",
-      name: "FilteredCharactersList",
-      component: FilteredCharactersList,
-    },
-    {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import("../views/AboutView.vue"),
-    },
-    
+      path: "/error",
+      name: "error",
+      component: Error,
+
+    }
   ],
 });
 

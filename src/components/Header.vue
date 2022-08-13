@@ -47,9 +47,11 @@ function toggleView() {
 
   .header-container__hamburger {
     margin-right: 2rem;
-    @include media-md {
+   
+    @include media-lg {
       display: none;
     }
+    
   }
 }
 </style>

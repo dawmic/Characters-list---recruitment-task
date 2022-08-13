@@ -1,23 +1,37 @@
 <script setup>
 import { ref, computed } from "vue";
+import router from "../router";
+import { useRoute } from 'vue-router';
 const props = defineProps(["showFilterPanel"]);
-const emit = defineEmits(["filterCharacters", "toggleView"]);
+const emit = defineEmits(["filterCharacters", "toggleView", "emitQuery"]);
 const filters = ref([]);
 const status = ref(0),
   gender = ref(0),
   species = ref(0);
+  const route = useRoute();
 const query = computed(() => filters.value.join("&"));
-
+const routeParams = computed(() => route.params.query);
 function filterData(...args) {
   filters.value = [];
-  console.log(args);
+
   for (let arg of args) {
     if (arg != "0") filters.value.push(arg);
   }
-  emit("filterCharacters", query);
+  //emit("filterCharacters", query);
 }
 function toggleView() {
   emit("toggleView");
+}
+function goToFilteredCharactersList(q){
+  
+  router.push({
+    name: 'FilteredCharactersList',
+    params: {query: q}, 
+  }); 
+
+}
+function passQuery(q){
+  emit("emitQuery", q);
 }
 </script>
 <template>
@@ -174,7 +188,7 @@ function toggleView() {
     </fieldset>
     <button
       class="filters-container__button"
-      @click="filterData(status, gender, species), toggleView()"
+      @click="filterData(status, gender, species), toggleView(), passQuery(query)"
     >
       APPLY
     </button>
