@@ -3,18 +3,30 @@ import { computed } from "vue";
 const props = defineProps(["infoList"]);
 const emit = defineEmits(["changePage"]);
 
+function replacePageNumber(str, num) {
+  let pageNumber = str.match(/[0-9]/g).join("");
+  let firstPage = str.replace(pageNumber, num);
+  changePageList(firstPage);
+}
+
 function changePageList(page) {
   emit("changePage", page.substring(43));
 }
 const disabledPrev = computed(() => props.infoList.prev == null);
 const disabledNext = computed(() => props.infoList.next == null);
-const currentPage = computed(() =>
-  props.infoList.next ? props.infoList.next.match(/\d/g).join("") - 1 : 1
+const currentPage = computed(
+  () =>
+    props.infoList.next
+      ? props.infoList.next.match(/\d/g).join("") - 1
+      : props.infoList.pages
 );
 </script>
 <template>
   <div class="pagination">
-    <button @click="changePageList()">
+    <button
+      @click="replacePageNumber(infoList.prev, 1)"
+      :disabled="disabledPrev"
+    >
       <span class="prev-arrow"></span>
       <span class="prev-arrow less-arrow-margin"></span>
     </button>
@@ -33,7 +45,10 @@ const currentPage = computed(() =>
     <button @click="changePageList(infoList.next)" :disabled="disabledNext">
       <span class="next-arrow"></span>
     </button>
-    <button @click="changePageList()">
+    <button
+      @click="replacePageNumber(infoList.next, infoList.pages)"
+      :disabled="disabledNext"
+    >
       <span class="next-arrow"></span>
       <span class="next-arrow less-arrow-margin"></span>
     </button>
