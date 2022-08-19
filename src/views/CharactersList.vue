@@ -17,6 +17,7 @@ function getCharactersList(query) {
       listInfo.value = res.data.info;
       loading.value = false;
       window.scrollTo(0, 0);
+    
     })
     .catch((err) => {
       router.push({
@@ -45,7 +46,7 @@ function changePage(page) {
   <main class="main">
     <Character v-for="item in charactersList" :item="item" />
     <Loader v-if="loading" />
-    <Paginate :infoList="listInfo" @changePage="changePage" />
+    <Paginate  v-if="!loading" :infoList="listInfo" @changePage="changePage" />
   </main>
 </template>
 <style lang="scss">
