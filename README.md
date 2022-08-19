@@ -1,43 +1,29 @@
-# character list - recruitment task
 
-This template should help get you started developing with Vue 3 in Vite.
+# Project Title
+
+The Rick and Morty characters list.
+
+## About
+
+This project introduce list of characters from Rick and Morty sitcom. This is part of my personal portfolio, I'm trying improve my skills, so, I'll be happy if you could provide me any feedback about the project. Whole project was make using Vue 3.
+
+## Demo
+
+[The Rick and Morty App](https://imaginative-hamster-7e8718.netlify.app/)
+
+## Features
+
+- Pagination
+- Filtering
+- Cross platform
+
+## Documentation
+
+[rickandmortyapi](https://rickandmortyapi.com/documentation)
+
+## Feedback
+
+If you have any feedback, please reach out me dawmic19@gmail.com
 
 
-[LINK DEMO](https://imaginative-hamster-7e8718.netlify.app/)
-## App built on Vue3 and using The Rick and Morty API. 
-### You will see characters from televishion show Rick and Morty which you can filter by gender, status and species.
 
-#### ---------
-
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
